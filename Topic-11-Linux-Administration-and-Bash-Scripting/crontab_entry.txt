@@ -1,0 +1,1 @@
+*/15 * * * * /bin/bash /path/to/healthcheck.sh >> /var/log/custom/healthcheck_$(date +\%F).log 2>&1

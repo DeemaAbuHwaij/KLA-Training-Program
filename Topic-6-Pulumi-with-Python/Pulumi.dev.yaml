@@ -1,0 +1,7 @@
+# Pulumi.dev.yaml
+config:
+  aws:region: us-west-1
+  windows_ami: ami-07d02ee1eeb0c996c  # Change to latest Windows Server AMI
+  key_name: your-aws-key
+  vpc_id: vpc-xxxxxxx
+  subnet_id: subnet-xxxxxxx

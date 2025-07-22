@@ -1,0 +1,46 @@
+{
+  "tests": [
+    {
+      "operation": "POST /vpcs",
+      "description": "Create VPC with valid data",
+      "input": {"name": "VPC-Test", "cidr": "10.0.0.0/16"},
+      "expected_status": 201,
+      "notes": "Positive scenario"
+    },
+    {
+      "operation": "POST /vpcs",
+      "description": "Invalid CIDR block",
+      "input": {"name": "BadVPC", "cidr": "10.500.0.0/16"},
+      "expected_status": 400,
+      "notes": "Negative validation"
+    },
+    {
+      "operation": "GET /vpcs",
+      "description": "List all VPCs",
+      "input": {},
+      "expected_status": 200,
+      "notes": "Should return all VPCs"
+    },
+    {
+      "operation": "DELETE /vpcs/{id}",
+      "description": "Try deleting with wrong permission",
+      "input": {"id": "vpc-1234"},
+      "expected_status": 403,
+      "notes": "Authorization check"
+    },
+    {
+      "operation": "PUT /vpcs/{id}",
+      "description": "Update VPC name with long string",
+      "input": {"name": "a".repeat(300)},
+      "expected_status": 400,
+      "notes": "Boundary test on name length"
+    },
+    {
+      "operation": "POST /vpcs",
+      "description": "Stress test - 100 VPCs",
+      "input": "repeat payload 100 times",
+      "expected_status": "200/429",
+      "notes": "Check system rate limits"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "us-west-1",
+      "source_ami_filter": {
+        "filters": {
+          "name": "Windows_Server-2019-English-Full-Base-*",
+          "virtualization-type": "hvm",
+          "root-device-type": "ebs"
+        },
+        "owners": ["801119661308"],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ami_name": "windows-python-{{timestamp}}",
+      "user_data_file": "scripts/win-init.ps1",
+      "communicator": "winrm",
+      "winrm_username": "Administrator",
+      "winrm_use_ssl": true,
+      "winrm_insecure": true,
+      "winrm_timeout": "6h"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "inline": [
+        "Write-Output 'Installing Python...'",
+        "Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe -OutFile C:\\python-installer.exe",
+        "Start-Process -FilePath C:\\python-installer.exe -ArgumentList '/quiet InstallAllUsers=1 PrependPath=1' -Wait",
+        "Remove-Item C:\\python-installer.exe",
+        "python --version"
+      ]
+    }
+  ]
+}

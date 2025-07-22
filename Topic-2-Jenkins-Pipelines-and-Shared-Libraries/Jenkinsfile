@@ -1,0 +1,36 @@
+@Library('polybot-shared-library') _
+
+pipeline {
+  agent any
+
+  parameters {
+    string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deployment environment')
+    string(name: 'BRANCH', defaultValue: 'main', description: 'Git branch to build')
+    string(name: 'TAG', defaultValue: 'latest', description: 'Docker image tag')
+  }
+
+  environment {
+    AWS_REGION = 'us-west-1'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        echo "Cloning branch: ${params.BRANCH}"
+        git branch: "${params.BRANCH}", url: 'https://github.com/DeemaAbuHwaij/PolybotService.git'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        deploy()
+      }
+    }
+  }
+
+  post {
+    always {
+      echo 'Pipeline completed.'
+    }
+  }
+}
