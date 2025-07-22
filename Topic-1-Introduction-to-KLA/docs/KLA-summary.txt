@@ -1,0 +1,36 @@
+About KLA
+
+KLA is a global tech company that builds tools to help make computer chips.
+Their systems inspect and measure wafers to find tiny problems early in the production process.
+They use optics, software, robotics, and machine learning to support every step of making chips.
+The chips inside phones, cars, and laptops work better and are more reliable due to KLA.
+
+---
+
+Optical Inspection
+
+KLA builds machines that use lasers and cameras to look for very small defects on wafers.
+They scan the wafer surface and find issues that could affect the chip’s performance.
+The system knows how to tell real problems from false alarms.
+It learns over time and helps improve production results.
+This inspection step is super important for chip quality.
+
+---
+
+Artificial Intelligence
+
+KLA uses machine learning to detect problems that people or simple tools might miss.
+The system checks lots of data and helps make smart decisions quickly.
+It finds patterns, catches issues early, and helps predict future problems.
+That makes the process more accurate and efficient.
+AI in KLA is used as a tool to improve quality and speed.
+
+---
+
+Robotics
+
+KLA also builds robots that move and scan wafers automatically.
+These robots are fast and accurate, and they don’t make human mistakes.
+They talk to other machines in the factory and keep things moving smoothly.
+That helps reduce errors and saves time during chip production.
+Robotics is key for full automation in modern fabs.
