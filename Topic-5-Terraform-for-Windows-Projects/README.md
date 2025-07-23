@@ -7,23 +7,7 @@
 
 ---
 
-## 🧱 Project Structure
-
-windows-terraform/
-├── main.tf # Launches the Windows VM and calls the security group module
-├── variables.tf # Input variables for region, AMI, subnet, etc.
-├── outputs.tf # Outputs public IP of the VM
-├── terraform.tfvars # User-specific values
-├── modules/
-│ └── rdp_sg/ # Security group module
-│ ├── main.tf
-│ ├── variables.tf
-│ └── outputs.tf
-
-
----
-
-## 🛠 Usage Instructions
+## Usage Instructions
 
 1. **Clone the repository** or create the file structure shown above.
 2. **Edit `terraform.tfvars`** with your specific values:
