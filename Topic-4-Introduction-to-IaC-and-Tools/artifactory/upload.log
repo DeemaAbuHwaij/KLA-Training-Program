@@ -1,0 +1,18 @@
+{
+  "repo" : "libs-release-local-generic-local",
+  "path" : "/myapp/v1.0.0/myapp-v1.0.0.zip",
+  "created" : "2025-07-23T12:15:47.675Z",
+  "createdBy" : "demaabohwej@gmail.com",
+  "downloadUri" : "https://trialgea5kk.jfrog.io/artifactory/libs-release-local-generic-local/myapp/v1.0.0/myapp-v1.0.0.zip",
+  "mimeType" : "application/zip",
+  "size" : "24",
+  "checksums" : {
+    "sha1" : "6b0a2cc9ab67c90be37b536aab7ced0d0214c2ca",
+    "md5" : "2c4ecaa47aaba14d6320f5291c32bf9f",
+    "sha256" : "90e655d4fdf55372145556efc22030d68fc32f6436a2f4df7cc8a06e87e9844d"
+  },
+  "originalChecksums" : {
+    "sha256" : "90e655d4fdf55372145556efc22030d68fc32f6436a2f4df7cc8a06e87e9844d"
+  },
+  "uri" : "https://trialgea5kk.jfrog.io/artifactory/libs-release-local-generic-local/myapp/v1.0.0/myapp-v1.0.0.zip"
+}
