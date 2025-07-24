@@ -1,7 +1,6 @@
-# Pulumi.dev.yaml
 config:
-  aws:region: us-west-1
-  windows_ami: ami-07d02ee1eeb0c996c  # Change to latest Windows Server AMI
-  key_name: your-aws-key
-  vpc_id: vpc-xxxxxxx
-  subnet_id: subnet-xxxxxxx
+  topic-6-pulumi-with-python:instance_type: "t3.medium"
+  topic-6-pulumi-with-python:windows_ami: "ami-014e30c8a36252ae5"
+  topic-6-pulumi-with-python:key_name: "DeemaKey"
+  topic-6-pulumi-with-python:vpc_id: "vpc-0e56aaeccaf1b8f8b"
+  topic-6-pulumi-with-python:subnet_id: "subnet-088e4019ce8664eec"

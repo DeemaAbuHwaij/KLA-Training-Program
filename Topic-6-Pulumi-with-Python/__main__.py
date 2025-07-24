@@ -1,7 +1,7 @@
 import pulumi
 import pulumi_aws as aws
 
-# Configuration
+# Configurations
 config = pulumi.Config()
 instance_type = config.get("instance_type") or "t3.medium"
 ami = config.require("windows_ami")
@@ -9,7 +9,7 @@ key_name = config.require("key_name")
 vpc_id = config.require("vpc_id")
 subnet_id = config.require("subnet_id")
 
-# Security Group (RDP)
+# Security Group for RDP
 rdp_sg = aws.ec2.SecurityGroup("rdp-sg",
     description="Allow RDP",
     vpc_id=vpc_id,
@@ -27,16 +27,20 @@ rdp_sg = aws.ec2.SecurityGroup("rdp-sg",
     }]
 )
 
-# Windows Server
+# Windows Server EC2
 server = aws.ec2.Instance("windows-server",
     instance_type=instance_type,
     ami=ami,
     key_name=key_name,
     subnet_id=subnet_id,
+    associate_public_ip_address=True,
     vpc_security_group_ids=[rdp_sg.id],
     tags={"Name": "PulumiWindowsServer"}
 )
 
-# Output
+# Outputs
+pulumi.export("instance_id", server.id)
 pulumi.export("public_ip", server.public_ip)
-pulumi.export("rdp_url", pulumi.Output.concat("rdp://", server.public_ip))
+
+# Info message
+pulumi.log.info("To clean up, run: pulumi destroy")
