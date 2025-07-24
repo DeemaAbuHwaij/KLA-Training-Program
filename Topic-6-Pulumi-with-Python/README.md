@@ -6,113 +6,58 @@
 - Using Pulumi config and stack environments
 - Managing infrastructure lifecycle with Pulumi CLI
 
----
+## What Was Built
 
-## Project Setup
+This project uses **Pulumi with Python** to deploy a virtual Windows server on **Microsoft Azure**. The infrastructure includes:
 
-### Prerequisites
-- Python 3.8+
-- Pulumi CLI installed ([install guide](https://www.pulumi.com/docs/install/))
-- AWS CLI configured with valid credentials (`aws configure`)
-- AWS Key Pair created for EC2 access
+- A **Resource Group** to organize all resources.
+- A **Virtual Network** and **Subnet** to manage internal networking.
+- A **Public IP Address** to expose the VM externally.
+- A **Network Interface Card (NIC)** connected to the subnet and public IP.
+- A **Windows Virtual Machine** (Windows Server 2019 Datacenter) with the `Standard_B2ms` size.
 
-### Install Python Dependencies
-```bash
-pip install -r requirements.txt
-```
+The admin credentials are managed securely using Pulumi configuration secrets.
 
----
+## Why This Setup
 
-## Environment Details
+This setup simulates a basic real-world deployment of a virtual server on Azure for testing, learning, or hosting simple workloads. It demonstrates:
 
-- **Cloud provider**: AWS
-- **Region**: Based on your AWS CLI profile (e.g., `us-west-2`)
-- **Language**: Python 3.12
-- **Pulumi stack**: `dev`
-- **Resources**:
-  - EC2 instance (Windows)
-  - Security Group allowing RDP (`TCP 3389`)
-- **Configuration**:
-  - `windows_ami`
-  - `instance_type`
-  - `key_name`
-  - `vpc_id`
-  - `subnet_id`
+- Using **Python** for IaC (Infrastructure as Code)
+- Managing cloud infrastructure declaratively
+- Storing secrets securely
+- Deploying repeatable environments with minimal manual steps
 
----
+## Outputs
+
+-**Public IP:** `172.176.178.79`
 
 ## Deployment Steps
 
-### 1. Initialize the Pulumi stack
-```bash
-pulumi stack init dev
-```
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 2. Set configuration values
-```bash
-pulumi config set windows_ami ami-xxxxxxxx
-pulumi config set key_name your-keypair
-pulumi config set vpc_id vpc-xxxxxxxx
-pulumi config set subnet_id subnet-xxxxxxxx
-```
+2. Set Pulumi config values:
+   ```bash
+   pulumi config set azure-native:location westeurope
+   pulumi config set admin_username azureuser
+   pulumi config set --secret admin_password P@ssword123!
+   ```
 
-### 3. Deploy the infrastructure
-```bash
-pulumi up
-```
+3. Deploy the stack:
+   ```bash
+   pulumi up
+   ```
 
-### 4. View Outputs
-Pulumi will output:
-- `instance_id`: EC2 resource ID
-- `public_ip`: Use this to connect via RDP
+## Cleanup
 
----
-
-## Cleanup Logic
-
-This Pulumi script does not destroy resources automatically in code (to prevent accidental deletion).  
-To clean up your environment safely:
-
+To destroy the environment:
 ```bash
 pulumi destroy
-pulumi stack rm dev
 ```
 
-Pulumi will handle resource destruction in the correct dependency order.
-
----
-
-## What Was Built and Why
-
-This project provisions a **Windows EC2 instance** on AWS using infrastructure as code (IaC) via Pulumi and Python.
-
-### Resources Created:
-- **EC2 Instance**: Publicly accessible Windows server
-- **Security Group**: Allows RDP access on port `3389`
-- **Configurable Parameters**: Allow this script to be reused in different environments or regions
-
-### Purpose:
-- Learn Pulumi and how to manage cloud resources with general-purpose programming (Python)
-- Demonstrate full lifecycle: deploy, update, destroy
-- Provide secure remote access via RDP to a custom cloud server
-
----
-
-## Screenshot
-
-The deployment result is shown in `docs/Deployment-screenshot.png`.
-The outputs are shown in `docs/Outputs-screenshot.png`.
-
-
----
-
-## Project Files
-
-| File                  | Description                                  |
-|-----------------------|----------------------------------------------|
-| `__main__.py`         | Pulumi Python script defining infrastructure |
-| `Pulumi.yaml`         | Project configuration                        |
-| `Pulumi.dev.yaml`     | Stack-specific values                        |
-| `requirements.txt`    | Python dependencies                          |
-| `docs/description.md` | Infrastructure explanation                   |
-| `docs/Deployment-screenshot.png` | Pulumi deployment confirmation screenshot |
+Then, optionally remove the stack:
+```bash
+pulumi stack rm dev
+```
