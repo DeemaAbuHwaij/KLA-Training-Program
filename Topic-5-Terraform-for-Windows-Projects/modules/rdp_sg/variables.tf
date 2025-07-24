@@ -1,1 +1,7 @@
-variable "vpc_id" {}
+variable "location" {
+  type = string
+}
+
+variable "resource_group_name" {
+  type = string
+}

@@ -1,23 +1,17 @@
-resource "aws_security_group" "rdp" {
-  name        = "rdp-access-sg"
-  description = "Allow RDP"
-  vpc_id      = var.vpc_id
+resource "azurerm_network_security_group" "rdp_sg" {
+  name                = "rdp-nsg"
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
-  ingress {
-    from_port   = 3389
-    to_port     = 3389
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "RDP-SG"
+  security_rule {
+    name                       = "RDP"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "3389"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
 }

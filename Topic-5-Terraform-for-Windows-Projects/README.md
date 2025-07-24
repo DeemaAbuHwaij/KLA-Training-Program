@@ -5,28 +5,32 @@
 - Using variables and outputs 
 - Working with modules
 
----
+##  Tasks
 
-## Usage Instructions
+1. Write main.tf to create a Windows VM
+2. Add output.tf with the VM's IP address
+Build a module for a security group allowing only RDP access
+3. Build a reusable module (modules/rdp_sg)
 
-1. **Clone the repository** or create the file structure shown above.
-2. **Edit `terraform.tfvars`** with your specific values:
-   - AWS region 
-   - Windows AMI ID 
-   - EC2 key pair name
-   - Subnet ID
-   - VPC ID
+## Resources Created
+- Azure Resource Group: `windows-rg`
+- Virtual Network: `windows-vnet`
+- Subnet: `windows-subnet`
+- Network Security Group (RDP only)
+- Public IP 
+- Network Interface (NIC)
+- Windows Virtual Machine: `windows-vm`
 
-3. **Run Terraform commands:**
+## Configuration Summary
+- VM Size: `Standard B2ms` 
+- OS: `Windows Server 2019 Datacenter`
+- Location: `East US`
+- RDP Port 3389 is enabled via NSG
+- Admin user/pass from `terraform.tfvars`
+
+## How to Deploy
 
 ```bash
 terraform init
-terraform plan -var-file="terraform.tfvars"
-terraform apply -var-file="terraform.tfvars"
-```
-
-4. **Use the output public_ip to**:
-
-    - Connect via Remote Desktop (RDP) using your .pem key and decrypted password from AWS Console
-    - Validate that the VM is reachable and functioning
-
+terraform plan -out=tfplan
+terraform apply tfplan

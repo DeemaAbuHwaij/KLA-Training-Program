@@ -1,19 +1,18 @@
-variable "aws_region" {
-  default = "us-west-1"
+variable "location" {
+  type    = string
+  default = "East US"
 }
 
-variable "windows_ami" {
-  description = "AMI ID of Windows Server"
+variable "vm_size" {
+  type    = string
+  default = "Standard_B2ms"
 }
 
-variable "instance_type" {
-  default = "t3.medium"
+variable "admin_username" {
+  type = string
 }
 
-variable "key_name" {
-  description = "EC2 Key Pair name"
+variable "admin_password" {
+  type      = string
+  sensitive = true
 }
-
-variable "vpc_id" {}
-
-variable "subnet_id" {}
