@@ -1,66 +1,75 @@
+# Trigger the pipeline automatically when code is pushed to the 'main' branch
 trigger:
   branches:
     include:
       - main
 
+# Also trigger the pipeline when a Pull Request targets the 'main' branch
 pr:
   branches:
     include:
       - main
 
+# Define runtime parameters for the pipeline
 parameters:
-  - name: BuildEnvironment
+  - name: BuildEnvironment     # Environment to deploy to: dev or prod
     type: string
     default: 'dev'
     values:
       - dev
       - prod
 
-  - name: tag
+  - name: tag                  # Docker image tag to use
     type: string
     default: 'latest'
 
+# Define global variables used throughout the pipeline
 variables:
   imageName: 'deemaa/polybot-dev'
+  imageNameprod: 'deemaa/polybot-prod'
   DOCKERHUB_USERNAME: $(DOCKERHUB_USERNAME)
   DOCKERHUB_TOKEN: $(DOCKERHUB_TOKEN)
-  imageNameprod: 'deemaa/polybot-prod'
 
-
+# ---------- Stage: Build & Deploy to Development ----------
 stages:
   - stage: Build_Dev
     displayName: Build & Deploy to Dev
-    condition: eq('${{ parameters.BuildEnvironment }}', 'dev')
+    condition: eq('${{ parameters.BuildEnvironment }}', 'dev')  # Only run if 'dev' is selected
     jobs:
       - job: DevDeploy
         displayName: Deploy to Development
         steps:
           - script: |
-              echo "🔧 Building Docker image..."
-              docker build -t $(imageName):${{ parameters.tag }} .
+              echo "Building Docker image..."
+              docker build -t $(imageName):${{ parameters.tag }} . 
 
-              echo "🔐 Logging into Docker Hub..."
-              echo "$(DOCKERHUB_TOKEN)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin
+              echo "Logging into Docker Hub..."
+              echo "$(DOCKERHUB_TOKEN)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin  
 
-              echo "📦 Pushing image to Docker Hub..."
+              echo "Pushing image to Docker Hub..."
               docker push $(imageName):${{ parameters.tag }}
             displayName: "Build and Push Docker Image to Dev"
 
+# ---------- Stage: Build & Deploy to Production (with approval) ----------
   - stage: Build_Prod
     displayName: Build & Deploy to Prod
-    condition: eq('${{ parameters.BuildEnvironment }}', 'prod')
-    dependsOn: Build_Dev
+    condition: eq('${{ parameters.BuildEnvironment }}', 'prod')  # Only run if 'prod' is selected
+    dependsOn: Build_Dev  # Ensure Dev build completes before Prod
     jobs:
-      - job: ProdDeploy
+      - deployment: ProdDeploy
         displayName: Deploy to Production
-        steps:
-          - script: |
-              echo "🔧 Building Docker image..."
-              docker build -t $(imageNameProd):${{ parameters.tag }} .
+        environment: prod-approval  # Links this stage to Azure Environment requiring manual approval
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo "🔧 Building Docker image..."
+                    docker build -t $(imageNameprod):${{ parameters.tag }} .  
 
-              echo "🔐 Logging into Docker Hub..."
-              echo "$(DOCKERHUB_TOKEN)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin
+                    echo "🔐 Logging into Docker Hub..."
+                    echo "$(DOCKERHUB_TOKEN)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin 
 
-              echo "📦 Pushing image to Docker Hub..."
-              docker push $(imageNameProd):${{ parameters.tag }}
-            displayName: "Build and Push Docker Image to Prod"
+                    echo "📦 Pushing image to Docker Hub..."
+                    docker push $(imageNameprod):${{ parameters.tag }}
+                  displayName: "Build and Push Docker Image to Prod"
