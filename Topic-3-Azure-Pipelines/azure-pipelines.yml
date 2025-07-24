@@ -24,7 +24,7 @@ variables:
   imageName: 'deemaa/polybot-dev'
   DOCKERHUB_USERNAME: $(DOCKERHUB_USERNAME)
   DOCKERHUB_TOKEN: $(DOCKERHUB_TOKEN)
-  imageName: 'deemaa/polybot-prod'
+  imageNameprod: 'deemaa/polybot-prod'
 
 
 stages:
