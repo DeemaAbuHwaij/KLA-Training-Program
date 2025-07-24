@@ -1,0 +1,66 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+parameters:
+  - name: BuildEnvironment
+    type: string
+    default: 'dev'
+    values:
+      - dev
+      - prod
+
+  - name: tag
+    type: string
+    default: 'latest'
+
+variables:
+  imageName: 'deemaa/polybot-dev'
+  DOCKERHUB_USERNAME: $(DOCKERHUB_USERNAME)
+  DOCKERHUB_TOKEN: $(DOCKERHUB_TOKEN)
+  imageName: 'deemaa/polybot-prod'
+
+
+stages:
+  - stage: Build_Dev
+    displayName: Build & Deploy to Dev
+    condition: eq('${{ parameters.BuildEnvironment }}', 'dev')
+    jobs:
+      - job: DevDeploy
+        displayName: Deploy to Development
+        steps:
+          - script: |
+              echo "🔧 Building Docker image..."
+              docker build -t $(imageName):${{ parameters.tag }} .
+
+              echo "🔐 Logging into Docker Hub..."
+              echo "$(DOCKERHUB_TOKEN)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin
+
+              echo "📦 Pushing image to Docker Hub..."
+              docker push $(imageName):${{ parameters.tag }}
+            displayName: "Build and Push Docker Image to Dev"
+
+  - stage: Build_Prod
+    displayName: Build & Deploy to Prod
+    condition: eq('${{ parameters.BuildEnvironment }}', 'prod')
+    dependsOn: Build_Dev
+    jobs:
+      - job: ProdDeploy
+        displayName: Deploy to Production
+        steps:
+          - script: |
+              echo "🔧 Building Docker image..."
+              docker build -t $(imageNameProd):${{ parameters.tag }} .
+
+              echo "🔐 Logging into Docker Hub..."
+              echo "$(DOCKERHUB_TOKEN)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin
+
+              echo "📦 Pushing image to Docker Hub..."
+              docker push $(imageNameProd):${{ parameters.tag }}
+            displayName: "Build and Push Docker Image to Prod"

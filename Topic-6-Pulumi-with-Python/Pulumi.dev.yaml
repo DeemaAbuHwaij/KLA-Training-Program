@@ -1,6 +1,5 @@
 config:
-  topic-6-pulumi-with-python:instance_type: "t3.medium"
-  topic-6-pulumi-with-python:windows_ami: "ami-0d94c1edb53740e3c"
-  topic-6-pulumi-with-python:key_name: "DeemaKey"
-  topic-6-pulumi-with-python:vpc_id: "vpc-0e56aaeccaf1b8f8b"
-  topic-6-pulumi-with-python:subnet_id: "subnet-088e4019ce8664eec"
+  topic-6-pulumi-with-python-azure:admin_username: "deemaazure"
+  topic-6-pulumi-with-python-azure:admin_password:
+    secure: "AAABANxcLYAMZhtfHXHCVnu3YLx5YcmzQbc5daQeC/TFHIblpFFCgtHT"
+  topic-6-pulumi-with-python-azure:vm_size: "Standard_B2ms"

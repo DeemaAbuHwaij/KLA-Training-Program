@@ -1,46 +1,65 @@
 import pulumi
-import pulumi_aws as aws
+import pulumi_azure_native as azure_native
 
-# Configurations
 config = pulumi.Config()
-instance_type = config.get("instance_type") or "t3.medium"
-ami = config.require("windows_ami")
-key_name = config.require("key_name")
-vpc_id = config.require("vpc_id")
-subnet_id = config.require("subnet_id")
+admin_username = config.get("admin_username") or "azureuser"
+admin_password = config.require_secret("admin_password")  # must meet Azure password complexity
+vm_size = config.get("vm_size") or "Standard_B2ms"
 
-# Security Group for RDP
-rdp_sg = aws.ec2.SecurityGroup("rdp-sg",
-    description="Allow RDP",
-    vpc_id=vpc_id,
-    ingress=[{
-        "protocol": "tcp",
-        "from_port": 3389,
-        "to_port": 3389,
-        "cidr_blocks": ["0.0.0.0/0"]
-    }],
-    egress=[{
-        "protocol": "-1",
-        "from_port": 0,
-        "to_port": 0,
-        "cidr_blocks": ["0.0.0.0/0"]
-    }]
+# 1. Resource Group
+resource_group = azure_native.resources.ResourceGroup("rg")
+
+# 2. Virtual Network
+vnet = azure_native.network.VirtualNetwork("vnet",
+    resource_group_name=resource_group.name,
+    address_space={"address_prefixes": ["10.0.0.0/16"]})
+
+# 3. Subnet
+subnet = azure_native.network.Subnet("subnet",
+    resource_group_name=resource_group.name,
+    virtual_network_name=vnet.name,
+    address_prefix="10.0.1.0/24")
+
+# 4. Public IP
+public_ip = azure_native.network.PublicIPAddress("public-ip",
+    resource_group_name=resource_group.name,
+    public_ip_allocation_method="Dynamic")
+
+# 5. Network Interface
+nic = azure_native.network.NetworkInterface("nic",
+    resource_group_name=resource_group.name,
+    ip_configurations=[{
+        "name": "ipconfig",
+        "subnet": {"id": subnet.id},
+        "public_ip_address": {"id": public_ip.id},
+    }])
+
+# 6. Windows Virtual Machine
+vm = azure_native.compute.VirtualMachine("win-vm",
+    resource_group_name=resource_group.name,
+    network_profile={"network_interfaces": [{"id": nic.id}]},
+    hardware_profile={"vm_size": vm_size},
+    os_profile={
+        "computer_name": "winvm",
+        "admin_username": admin_username,
+        "admin_password": admin_password,
+    },
+    storage_profile={
+        "os_disk": {
+            "name": "osdisk",
+            "caching": "ReadWrite",
+            "create_option": "FromImage",
+            "managed_disk": {"storage_account_type": "Standard_LRS"},
+        },
+        "image_reference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2019-Datacenter",
+            "version": "latest",
+        },
+    }
 )
 
-# Windows Server EC2
-server = aws.ec2.Instance("windows-server",
-    instance_type=instance_type,
-    ami=ami,
-    key_name=key_name,
-    subnet_id=subnet_id,
-    associate_public_ip_address=True,
-    vpc_security_group_ids=[rdp_sg.id],
-    tags={"Name": "PulumiWindowsServer"}
-)
-
-# Outputs
-pulumi.export("instance_id", server.id)
-pulumi.export("public_ip", server.public_ip)
-
-# Info message
-pulumi.log.info("To clean up, run: pulumi destroy")
+# 7. Outputs
+pulumi.export("vm_name", vm.name)
+pulumi.export("public_ip", public_ip.ip_address)
