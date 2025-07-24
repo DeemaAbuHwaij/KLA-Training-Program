@@ -1,0 +1,23 @@
+@Library('polybot-shared-library') _  // Replace with your actual shared library name in Jenkins
+
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'SERVICE_NAME', defaultValue: 'polybot', description: 'Name of the service to deploy')
+        string(name: 'IMAGE_FULL_NAME_PARAM', defaultValue: 'deemaa/polybot:latest', description: 'Docker image full name with tag')
+    }
+
+    stages {
+        stage('Deploy') {
+            steps {
+                script {
+                    deploy(
+                        serviceName = params.SERVICE_NAME,
+                        imageName = params.IMAGE_FULL_NAME_PARAM
+                    )
+                }
+            }
+        }
+    }
+}
