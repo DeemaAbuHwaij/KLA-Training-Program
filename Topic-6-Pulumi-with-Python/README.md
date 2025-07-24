@@ -101,6 +101,8 @@ This project provisions a **Windows EC2 instance** on AWS using infrastructure a
 ## Screenshot
 
 The deployment result is shown in `docs/Deployment-screenshot.png`.
+The outputs are shown in `docs/Outputs-screenshot.png`.
+
 
 ---
 
