@@ -2,7 +2,6 @@
 def call(String serviceName, String imageName) {
 
     stage('Git setup') {
-        // Ensure the Git repo is on the correct branch (main), not in detached HEAD state
         sh '''
             git checkout -b main || git checkout main
         '''
@@ -14,7 +13,6 @@ def call(String serviceName, String imageName) {
             echo '🔄 Updating deployment YAML for service: ${serviceName}'
             cd ${serviceName}
 
-            # Replace the image line with the new Docker image name using sed
             sed -i "s|image: .*|image: ${imageName}|" deployment.yaml
 
             # Stage and commit the change
