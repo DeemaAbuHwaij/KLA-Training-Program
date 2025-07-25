@@ -1,6 +1,6 @@
-# 📦 Topic 8: Ansible – Remote Server Automation
+# Topic 8: Ansible – Remote Server Automation
 
-## 🎯 What You’ll Learn
+## What You’ll Learn
 - Running Ansible Playbooks to automate server configuration
 - Writing automation tasks using Ansible modules and Jinja2 templates
 - Defining and using inventories to manage host groups
