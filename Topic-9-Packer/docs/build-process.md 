@@ -1,0 +1,55 @@
+# Build Process – Topic 9: Packer – Creating Prebuilt Machine Images
+
+## What Was Built
+
+A reusable Windows Server 2019 image with Python 3.11.5 pre-installed using Packer and PowerShell provisioning.
+This image can be used to launch new Azure VMs with Python already installed and configured in the system PATH.
+
+---
+
+## Configuration
+
+- **Builder**: `azure-arm`
+- **Region**: `West Europe`
+- **VM Size**: `Standard_B1s`
+- **Provisioner**: PowerShell script
+- **Base Image**: Microsoft-provided `WindowsServer:2019-Datacenter`
+- **Python Version Installed**: `3.11.5`
+
+---
+
+## Provisioning Steps
+
+The provisioning script:
+
+- Downloads the Python 3.11.5 installer
+- Runs it silently with `/quiet` and adds it to system PATH
+- Verifies the installation using fallback logic:
+  - `python --version`
+  - Or directly via `C:\Program Files\Python311\python.exe`
+
+---
+
+## Output Image
+
+- **Image Name**: `windows-python-1753445048`
+- **Image Location**: `West Europe`
+- **Resource Group**: `packer-rg`
+- **Managed Image ID**:
+  /subscriptions/224b3184-d1b2-48ab-a0e0-f6cd58ba8c11/resourceGroups/packer-rg/providers/Microsoft.Compute/images/windows-python-1753445048
+
+---
+
+## Cleanup & Automation
+
+- Temporary resource group, VM, public IP, VNet, NIC, and Key Vault were created automatically.
+- After generalizing and capturing the image, **all resources were cleaned up** by Packer.
+
+---
+
+## Verified Output
+
+Packer confirmed the presence of Python with this output:
+```
+==> azure-arm: Python 3.11.5
+```

@@ -1,0 +1,90 @@
+[1;32mazure-arm: output will be in this color.[0m
+
+[1;32m==> azure-arm: Running builder ...[0m
+[1;32m==> azure-arm: Creating Azure Resource Manager (ARM) client ...[0m
+[1;32m==> azure-arm: ARM Client successfully created[0m
+[1;32m==> azure-arm: Getting source image id for the deployment ...[0m
+[1;32m==> azure-arm:  -> SourceImageName: '/subscriptions/224b3184-d1b2-48ab-a0e0-f6cd58ba8c11/providers/Microsoft.Compute/locations/West Europe/publishers/MicrosoftWindowsServer/ArtifactTypes/vmimage/offers/WindowsServer/skus/2019-Datacenter/versions/latest'[0m
+[1;32m==> azure-arm: Creating resource group ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> Location          : 'West Europe'[0m
+[1;32m==> azure-arm:  -> Tags              :[0m
+[1;32m==> azure-arm: Validating deployment template ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> DeploymentName    : 'kvpkrdpagjbnihny7'[0m
+[1;32m==> azure-arm: Deploying deployment template ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> DeploymentName    : 'kvpkrdpagjbnihny7'[0m
+[1;32m==> azure-arm: Getting the certificate's URL ...[0m
+[1;32m==> azure-arm:  -> Key Vault Name        : 'pkrkvagjbnihny7'[0m
+[1;32m==> azure-arm:  -> Key Vault Secret Name : 'packerKeyVaultSecret'[0m
+[1;32m==> azure-arm:  -> Certificate URL       : 'https://pkrkvagjbnihny7.vault.azure.net/secrets/packerKeyVaultSecret/7a547982d9a945cca8f60b07c8d5cdcd'[0m
+[1;32m==> azure-arm: Setting the certificate's URL ...[0m
+[1;32m==> azure-arm: Validating deployment template ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> DeploymentName    : 'pkrdpagjbnihny7'[0m
+[1;32m==> azure-arm: Deploying deployment template ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> DeploymentName    : 'pkrdpagjbnihny7'[0m
+[1;32m==> azure-arm: Getting the VM's IP address ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName   : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> PublicIPAddressName : 'pkripagjbnihny7'[0m
+[1;32m==> azure-arm:  -> NicName             : 'pkrniagjbnihny7'[0m
+[1;32m==> azure-arm:  -> Network Connection  : 'PublicEndpoint'[0m
+[1;32m==> azure-arm:  -> IP Address          : '52.233.129.70'[0m
+[1;32m==> azure-arm: Waiting for WinRM to become available...[0m
+[1;32m==> azure-arm: WinRM connected.[0m
+[1;32m==> azure-arm: Connected to WinRM![0m
+[1;32m==> azure-arm: Provisioning with Powershell...[0m
+[1;32m==> azure-arm: Provisioning with powershell script: scripts/install_python.ps1[0m
+[1;32m==> azure-arm: Downloading Python installer...[0m
+[1;32m==> azure-arm: Installing Python...[0m
+[1;32m==> azure-arm: Verifying installation...[0m
+[1;32m==> azure-arm: Python 3.11.5[0m
+[1;32m==> azure-arm: Querying the machine's properties ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> ComputeName       : 'pkrvmagjbnihny7'[0m
+[1;32m==> azure-arm:  -> Managed OS Disk   : '/subscriptions/224b3184-d1b2-48ab-a0e0-f6cd58ba8c11/resourceGroups/pkr-Resource-Group-agjbnihny7/providers/Microsoft.Compute/disks/pkrosagjbnihny7'[0m
+[1;32m==> azure-arm: Querying the machine's additional disks properties ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> ComputeName       : 'pkrvmagjbnihny7'[0m
+[1;32m==> azure-arm: Powering off machine ...[0m
+[1;32m==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> ComputeName       : 'pkrvmagjbnihny7'[0m
+[1;32m==> azure-arm:  -> Compute ResourceGroupName : 'pkr-Resource-Group-agjbnihny7'[0m
+[1;32m==> azure-arm:  -> Compute Name              : 'pkrvmagjbnihny7'[0m
+[1;32m==> azure-arm:  -> Compute Location          : 'West Europe'[0m
+[1;32m==> azure-arm: Generalizing machine ...[0m
+[1;32m==> azure-arm: Capturing image ...[0m
+[1;32m==> azure-arm:  -> Image ResourceGroupName   : 'packer-rg'[0m
+[1;32m==> azure-arm:  -> Image Name                : 'windows-python-1753445048'[0m
+[1;32m==> azure-arm:  -> Image Location            : 'West Europe'[0m
+[1;32m==> azure-arm: 
+==> azure-arm: Deleting Virtual Machine deployment and its attached resources...[0m
+[1;32m==> azure-arm: Deleted -> pkrvmagjbnihny7 : 'Microsoft.Compute/virtualMachines'[0m
+[1;32m==> azure-arm: Deleted -> pkrniagjbnihny7 : 'Microsoft.Network/networkInterfaces'[0m
+[1;32m==> azure-arm: Deleted -> pkrvnagjbnihny7 : 'Microsoft.Network/virtualNetworks'[0m
+[1;32m==> azure-arm: Deleted -> pkripagjbnihny7 : 'Microsoft.Network/publicIPAddresses'[0m
+[1;32m==> azure-arm: Deleted -> pkrsgagjbnihny7 : 'Microsoft.Network/networkSecurityGroups'[0m
+[1;32m==> azure-arm: Deleted -> Microsoft.Compute/disks : '/subscriptions/224b3184-d1b2-48ab-a0e0-f6cd58ba8c11/resourceGroups/pkr-Resource-Group-agjbnihny7/providers/Microsoft.Compute/disks/pkrosagjbnihny7'[0m
+[1;32m==> azure-arm: Removing the created Deployment object: 'pkrdpagjbnihny7'[0m
+[1;32m==> azure-arm: 
+==> azure-arm: Deleting KeyVault created during build[0m
+[1;32m==> azure-arm: Deleted -> pkrkvagjbnihny7 : 'Microsoft.KeyVault/vaults'[0m
+[1;32m==> azure-arm: Removing the created Deployment object: 'kvpkrdpagjbnihny7'[0m
+[1;32m==> azure-arm: 
+==> azure-arm: Cleanup requested, deleting resource group ...[0m
+[1;32m==> azure-arm: Resource group has been deleted.[0m
+[1;32mBuild 'azure-arm' finished after 8 minutes 25 seconds.[0m
+
+==> Wait completed after 8 minutes 25 seconds
+
+==> Builds finished. The artifacts of successful builds are:
+--> azure-arm: Azure.ResourceManagement.VMImage:
+
+OSType: Windows
+ManagedImageResourceGroupName: packer-rg
+ManagedImageName: windows-python-1753445048
+ManagedImageId: /subscriptions/224b3184-d1b2-48ab-a0e0-f6cd58ba8c11/resourceGroups/packer-rg/providers/Microsoft.Compute/images/windows-python-1753445048
+ManagedImageLocation: West Europe
+
