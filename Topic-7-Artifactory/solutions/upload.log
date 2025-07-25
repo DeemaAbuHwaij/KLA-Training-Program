@@ -1,0 +1,18 @@
+{
+  "repo" : "libs-release-local",
+  "path" : "/myapp/1.0.0/myapp-v1.0.0.zip",
+  "created" : "2025-07-25T06:47:58.348Z",
+  "createdBy" : "deemaa@post.bgu.ac.il",
+  "downloadUri" : "https://trialruhipq.jfrog.io/artifactory/libs-release-local/myapp/1.0.0/myapp-v1.0.0.zip",
+  "mimeType" : "application/zip",
+  "size" : "24",
+  "checksums" : {
+    "sha1" : "d009d04ffe621bcc6547cee054fa0bc76b2901d4",
+    "md5" : "15262cd4293aa33a883835726d538b07",
+    "sha256" : "3b1c8391351023383087606924d365dc2c6281003c02d925b43347f160e412e0"
+  },
+  "originalChecksums" : {
+    "sha256" : "3b1c8391351023383087606924d365dc2c6281003c02d925b43347f160e412e0"
+  },
+  "uri" : "https://trialruhipq.jfrog.io/artifactory/libs-release-local/myapp/1.0.0/myapp-v1.0.0.zip"
+}
