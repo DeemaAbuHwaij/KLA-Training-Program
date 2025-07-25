@@ -1,22 +1,29 @@
 ---
-- name: Install Apache and deploy custom homepage
-  hosts: webservers
-  become: yes
+# Playbook to install Apache and deploy a custom index.html page
+- name: Install Apache and deploy custom index page
+  hosts: webserver       # Target group defined in the inventory file
+  become: true           # Use sudo/root privileges for system-level tasks
 
   tasks:
+    # Task 1: Install Apache using apt package manager
     - name: Install Apache
       apt:
-        name: apache2
-        state: present
-        update_cache: yes
+        name: apache2           # Package to install
+        state: present          # Ensure it's installed (but not necessarily the latest)
+        update_cache: true      # Update the apt cache before installing
 
+    # Task 2: Make sure Apache service is started and enabled
     - name: Ensure Apache is running
       service:
-        name: apache2
-        state: started
-        enabled: yes
+        name: apache2           # Apache service name on Ubuntu
+        state: started          # Make sure the service is running
+        enabled: true           # Enable it to start at boot
 
+    # Task 3: Deploy a custom index.html file using Jinja2 template
     - name: Deploy custom index.html
       template:
-        src: templates/index.html.j2
-        dest: /var/www/html/index.html
+        src: templates/index.html.j2         # Path to Jinja2 template (relative to project dir)
+        dest: /var/www/html/index.html       # Target path on the remote server
+        owner: www-data                      # Set correct ownership for Apache to serve the file
+        group: www-data
+        mode: '0644'                         # Set read permissions for all, write for owner
