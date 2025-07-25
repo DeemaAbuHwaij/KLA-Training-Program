@@ -1,13 +1,12 @@
 #!/bin/bash
+# user_audit.sh - Lists users with shell access and checks last login
 
-echo "Username,Last Login" > user_logins.csv
+echo "Username,Last Login" > user_audit_report.csv
 
-for user in $(cut -d: -f1 /etc/passwd); do
-    shell=$(getent passwd "$user" | cut -d: -f7)
-    if [[ "$shell" != "/usr/sbin/nologin" && "$shell" != "/bin/false" ]]; then
-        last_login=$(lastlog -u "$user" | awk 'NR==2 {print $4, $5, $6}')
-        echo "$user,$last_login" >> user_logins.csv
-    fi
+# Get users with shell access
+grep -vE "/false|/nologin" /etc/passwd | cut -d: -f1,7 | while IFS=: read user shell; do
+    last_login=$(lastlog -u "$user" | awk 'NR==2 {print $4, $5, $6}')
+    echo "$user,$last_login" >> user_audit_report.csv
 done
 
-column -t -s, user_logins.csv
+column -s, -t user_audit_report.csv

@@ -1,0 +1,51 @@
+#!/usr/bin/expect -f
+# check_disk_remote.exp - Only save disk space output
+
+# Usage: ./check_disk_remote.exp <username> <host> <password>
+
+# Input arguments
+set timeout 10
+set user [lindex $argv 0]
+set host [lindex $argv 1]
+set password [lindex $argv 2]
+
+# Log file setup
+set script_path [file normalize [info script]]
+set script_dir [file dirname $script_path]
+set log_dir "$script_dir/logs"
+file mkdir $log_dir
+set timestamp [clock format [clock seconds] -format "%Y-%m-%d_%H-%M-%S"]
+set log_file "$log_dir/disk_check_${host}_$timestamp.log"
+
+# Start SSH session
+spawn ssh $user@$host
+
+# Handle first-time SSH confirmation
+expect {
+    "yes/no" {
+        send "yes\r"
+        expect "*?assword"
+        send "$password\r"
+    }
+    "*?assword" {
+        send "$password\r"
+    }
+}
+
+# Wait for prompt, run df -h
+expect -re {[#\$] $}
+send "df -h\r"
+
+# Capture and write only df -h output
+expect {
+    -re "(Filesystem.*\n(?:.+\n)+)" {
+        set output $expect_out(1,string)
+        set f [open "$log_file" "w"]
+        puts $f "$output"
+        close $f
+    }
+}
+
+# Exit and clean up
+send "exit\r"
+expect eof

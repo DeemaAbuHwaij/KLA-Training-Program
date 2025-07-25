@@ -1,8 +1,10 @@
 #!/bin/bash
+# monitor_logins.sh - Scans auth log for failed login attempts
 
 LOG_FILE="/var/log/auth.log"
-OUTPUT_FILE="/tmp/login_failures.txt"
+OUTPUT="/tmp/login_failures.txt"
 
-grep "Failed password" "$LOG_FILE" | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr > "$OUTPUT_FILE"
+echo "Failed login attempts (from $LOG_FILE)" > "$OUTPUT"
+grep "Failed password" "$LOG_FILE" | awk '{print $1, $2, $3, $9, $11}' >> "$OUTPUT"
 
-echo "[INFO] Report generated at $OUTPUT_FILE"
+echo "Report written to $OUTPUT"
