@@ -1,26 +1,63 @@
-# Multithreading vs Async in Python
+# Performance Comparison – Multithreading vs AsyncIO in Python
 
-This topic explores the performance of concurrent API calls using:
+## Overview
+This experiment compares the performance of two different concurrency models in Python:
+- `ThreadPoolExecutor` with the `requests` library (multithreading)
+- `asyncio` with `aiohttp` (asynchronous)
 
-- `ThreadPoolExecutor` (multithreading)
-- `aiohttp` with `asyncio` (asynchronous programming)
+Each implementation makes **10 API calls** to:  
+`https://jsonplaceholder.typicode.com/posts/{id}`
+
+---
 
 ## Test Setup
-We fetched 20 fake blog posts from:
-[https://jsonplaceholder.typicode.com/posts/{id}](https://jsonplaceholder.typicode.com/posts/{id})
 
-## Observed Runtime (example results)
-| Method            | Time (seconds) |
-|------------------|----------------|
-| ThreadPoolExecutor | ~1.40         |
-| Asyncio + aiohttp | ~0.60         |
+- Machine: Local development environment
+- Number of API requests: 10
+- Endpoint: Free public REST API (jsonplaceholder)
+- Requests made in parallel (threads or async coroutines)
+- Timeout: 5 seconds
 
-> Your results may vary depending on network latency.
+---
 
-## Summary
-- **ThreadPoolExecutor** is easier to adopt and good for I/O-bound tasks with limited concurrency.
-- **Asyncio** performs better when managing large numbers of I/O tasks with less overhead.
-- **Async code** is more scalable and lightweight but requires a shift in thinking and structure.
+## Execution Results
+
+| Method              | Library Used           | Runtime (seconds) |
+|---------------------|------------------------|-------------------|
+| ThreadPoolExecutor  | `requests`             | 1.11              |
+| asyncio + aiohttp   | `aiohttp` + `asyncio`  | 0.19              |
+
+![img.png](img.png)
+
+---
+
+## Analysis
+
+- **ThreadPoolExecutor** runs synchronous HTTP requests in parallel using multiple threads.
+  - Good for working with blocking I/O libraries like `requests`
+  - Threads can scale for small workloads but become inefficient at large scale due to context switching
+
+- **AsyncIO + aiohttp** is non-blocking and event-driven.
+  - All requests are initiated simultaneously and resolved as data is received
+  - Much more scalable and lightweight for I/O-bound workloads
+
+---
 
 ## Conclusion
-Use async programming for high-concurrency I/O-bound tasks. Threading is suitable for simpler parallel workloads or when working with blocking libraries like `requests`.
+
+- Use **asyncio + aiohttp** for:
+  - Many simultaneous network calls
+  - Efficient CPU and memory usage
+  - Real-time applications (chat, APIs, monitoring)
+
+- Use **ThreadPoolExecutor** for:
+  - Integrating with blocking libraries like `requests`
+  - Migrating legacy codebases
+
+---
+
+## Final Thoughts
+
+- Async is faster and more scalable, but slightly harder to learn.
+- For modern Python projects with a lot of HTTP calls, **asyncio is the recommended approach**.
+
