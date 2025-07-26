@@ -7,16 +7,18 @@
 
 ## Project Structure
 
+```
 Topic-4-Introduction-to-IaC-and-Tools/
-├── comparison.md # Terraform vs Pulumi (Hebrew)
+├── comparison.md              # Terraform vs Pulumi (Hebrew)
 ├── docs/
-│   ├── vault-consul.md # Roles of Vault and Consul
-│   └── devops-diagram.png # Schematic diagram of a DevOps system
+│   ├── vault-consul.md        # Roles of Vault and Consul
+│   └── devops-diagram.png     # Schematic diagram of a DevOps system
 ├── artifactory/
-│   ├── upload.sh # Artifact upload script using curl
-│   ├── upload.log # Sample output of a curl upload
-│   ├── cleanup-policy.md # Retention policy for artifacts
-│   └── folder-structure.md # Recommended artifact organization
+│   ├── upload.sh              # Artifact upload script using curl
+│   ├── upload.log             # Sample output of a curl upload
+│   ├── cleanup-policy.md      # Retention policy for artifacts
+│   └── folder-structure.md    # Recommended artifact organization
+```
 
 ---
 
