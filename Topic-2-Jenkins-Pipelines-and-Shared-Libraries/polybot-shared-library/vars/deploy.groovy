@@ -1,9 +1,4 @@
-/**
- * Deploys a service by updating the Docker image in its deployment.yaml and pushing to GitHub.
- *
- * @param serviceName Name of the service directory (e.g., polybot)
- * @param imageName Full Docker image name with tag (e.g., deemaa/polybot:latest)
- */
+// Shared library function to deploy updated image by modifying the YAML manifest
 def call(String serviceName, String imageName) {
 
     stage('Git setup') {
@@ -13,31 +8,30 @@ def call(String serviceName, String imageName) {
     }
 
     stage('Update YAML manifest') {
+        // Navigate to the service folder and update the deployment.yaml with the new image name
         sh """
-            echo 🛠️ Updating deployment YAML for service: ${serviceName}
+            echo '🔄 Updating deployment YAML for service: ${serviceName}'
             cd ${serviceName}
 
-            # Replace image line in deployment.yaml
-            sed -i 's|image: .*|image: ${imageName}|' deployment.yaml
+            sed -i "s|image: .*|image: ${imageName}|" deployment.yaml
 
-            # Commit change
+            # Stage and commit the change
             git add deployment.yaml
             git commit -m "Updated image for ${serviceName} to ${imageName}"
         """
     }
 
     stage('Git push') {
-        withCredentials([usernamePassword(
-            credentialsId: 'github',
-            usernameVariable: 'GITHUB_USERNAME',
-            passwordVariable: 'GITHUB_TOKEN'
-        )]) {
-            sh """
-                git config user.name "${GITHUB_USERNAME}"
-                git config user.email "${GITHUB_USERNAME}@users.noreply.github.com"
+        // Push the changes back to GitHub using credentials securely
+        withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
+            sh '''
+                # Configure Git user for commit
+                git config user.name "$GITHUB_USERNAME"
+                git config user.email "$GITHUB_USERNAME@users.noreply.github.com"
 
-                git push https://${GITHUB_TOKEN}@github.com/DeemaAbuHwaij/PolybotInfra.git main
-            """
+                # Push the changes to the GitHub repository using the token
+                git push https://$GITHUB_TOKEN@github.com/DeemaAbuHwaij/PolybotInfra.git main
+            '''
         }
     }
 }
