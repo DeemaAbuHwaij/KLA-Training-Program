@@ -1,0 +1,22 @@
+Sending build context to Docker daemon  6.144kB
+
+Step 1/5 : FROM mcr.microsoft.com/windows/servercore:ltsc2022
+ ---> b55ae001c969
+Step 2/5 : RUN powershell -NoProfile -Command "Add-WindowsFeature Web-Server"
+ ---> Using cache
+ ---> bc54854f67c3
+Step 3/5 : COPY index.html C:/inetpub/wwwroot/index.html
+ ---> Using cache
+ ---> bec94a0d253b
+Step 4/5 : EXPOSE 80
+ ---> Using cache
+ ---> 6067cababf35
+Step 5/5 : CMD ["powershell", "-NoProfile", "-Command", "Start-Service W3SVC; while ($true) { Start-Sleep -Seconds 3600 }"]
+ ---> Using cache
+ ---> eebb0aa07b61
+Successfully built eebb0aa07b61
+Successfully tagged windows-iis-demo:latest
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations Γזע docker scout quickview
+
