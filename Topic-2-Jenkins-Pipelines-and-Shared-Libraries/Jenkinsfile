@@ -1,4 +1,4 @@
-@Library('polybot-shared-library') _  // Replace with your actual shared library name in Jenkins
+@Library('polybot-shared-library') _  // Replace with your shared library name in Jenkins
 
 pipeline {
     agent any
@@ -12,10 +12,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    deploy(
-                        serviceName = params.SERVICE_NAME,
-                        imageName = params.IMAGE_FULL_NAME_PARAM
-                    )
+                    // Call shared library function with two positional parameters
+                    deploy(params.SERVICE_NAME, params.IMAGE_FULL_NAME_PARAM)
                 }
             }
         }
