@@ -10,13 +10,13 @@
 Topic-4-Introduction-to-IaC-and-Tools/
 ├── comparison.md # Terraform vs Pulumi (Hebrew)
 ├── docs/
-│ ├── vault-consul.md # Roles of Vault and Consul
-│ └── devops-diagram.png # Schematic diagram of a DevOps system
+│   ├── vault-consul.md # Roles of Vault and Consul
+│   └── devops-diagram.png # Schematic diagram of a DevOps system
 ├── artifactory/
-│ ├── upload.sh # Artifact upload script using curl
-│ ├── upload.log # Sample output of a curl upload
-│ ├── cleanup-policy.md # Retention policy for artifacts
-│ └── folder-structure.md # Recommended artifact organization
+│   ├── upload.sh # Artifact upload script using curl
+│   ├── upload.log # Sample output of a curl upload
+│   ├── cleanup-policy.md # Retention policy for artifacts
+│   └── folder-structure.md # Recommended artifact organization
 
 ---
 
@@ -51,7 +51,7 @@ Topic-4-Introduction-to-IaC-and-Tools/
       - Artifacts from Artifactory
       - Secrets from Vault 
       - Service discovery from Consul
--These tools work together to automate deployment, secure secrets, and enable service coordination.
+- These tools work together to automate deployment, secure secrets, and enable service coordination.
 
 ---
 
