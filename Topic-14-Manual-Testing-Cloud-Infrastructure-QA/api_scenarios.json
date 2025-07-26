@@ -1,0 +1,43 @@
+{
+  "tests": [
+    {
+      "name": "Create VPC - Valid Input",
+      "method": "POST",
+      "url": "/api/v1/vpcs",
+      "payload": { "name": "vpc-dev", "cidr": "10.0.0.0/16" },
+      "expected_status": 201,
+      "comment": "Should create new VPC"
+    },
+    {
+      "name": "Create VPC - Invalid CIDR",
+      "method": "POST",
+      "url": "/api/v1/vpcs",
+      "payload": { "name": "vpc-bad", "cidr": "10.0.0.300/16" },
+      "expected_status": 400,
+      "comment": "CIDR is invalid; should fail"
+    },
+    {
+      "name": "Get VPC by ID",
+      "method": "GET",
+      "url": "/api/v1/vpcs/vpc-12345",
+      "expected_status": 200,
+      "comment": "Should return VPC details"
+    },
+    {
+      "name": "Delete VPC without permission",
+      "method": "DELETE",
+      "url": "/api/v1/vpcs/vpc-12345",
+      "expected_status": 403,
+      "comment": "Should reject unauthorized delete"
+    },
+    {
+      "name": "Stress test - 100 VPC creates",
+      "method": "POST",
+      "url": "/api/v1/vpcs",
+      "payload": { "name": "vpc-stress", "cidr": "10.0.X.0/24" },
+      "repeat": 100,
+      "expected_status": 201,
+      "comment": "All should succeed if throttling is handled"
+    }
+  ]
+}
