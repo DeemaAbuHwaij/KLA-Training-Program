@@ -10,7 +10,7 @@ def call(String serviceName, String imageName) {
     stage('Update YAML manifest') {
         // Navigate to the service folder and update the deployment.yaml with the new image name
         sh """
-            echo '🔄 Updating deployment YAML for service: ${serviceName}'
+            echo 'Updating deployment YAML for service: ${serviceName}'
             cd ${serviceName}
 
             sed -i "s|image: .*|image: ${imageName}|" deployment.yaml

@@ -19,6 +19,7 @@
 - This README
 - A README for the shared library
 
-## References
-- Jenkins Shared Libraries: https://www.jenkins.io/doc/book/pipeline/shared-libraries/
-- Jenkins Pipeline Syntax: https://www.jenkins.io/doc/book/pipeline/syntax/
+## Reference Links
+- [Jenkins Shared Libraries](https://www.jenkins.io/doc/book/pipeline/shared-libraries/)
+- [Jenkins Pipeline Syntax](https://www.jenkins.io/doc/book/pipeline/syntax/)
+- [Course Tutorials](https://github.com/alonitac/Fursa25/tree/main/tutorials) 
