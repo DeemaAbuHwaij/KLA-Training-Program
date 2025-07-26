@@ -1,14 +1,19 @@
 # Trigger the pipeline automatically when code is pushed to the 'main' branch
-trigger:
-  branches:
-    include:
-      - main
+# trigger:
+#   branches:
+#     include:
+#       - main
+
+trigger: none
+
+pr: none
+
 
 # Also trigger the pipeline when a Pull Request targets the 'main' branch
-pr:
-  branches:
-    include:
-      - main
+# pr:
+#  branches:
+#    include:
+#      - main
 
 # Define runtime parameters for the pipeline
 parameters:
