@@ -1,80 +1,61 @@
-# Trigger the pipeline automatically when code is pushed to the 'main' branch
-# trigger:
-#   branches:
-#     include:
-#       - main
+# Automatically trigger the pipeline when a push is made to the 'main' branch
+trigger:
+  branches:
+    include:
+      - main
 
-trigger: none
+# Also run the pipeline when a Pull Request targets the 'main' branch
+pr:
+  branches:
+    include:
+      - main
 
-pr: none
-
-
-# Also trigger the pipeline when a Pull Request targets the 'main' branch
-# pr:
-#  branches:
-#    include:
-#      - main
-
-# Define runtime parameters for the pipeline
+# Define runtime parameters that can be set when running the pipeline manually
 parameters:
-  - name: BuildEnvironment     # Environment to deploy to: dev or prod
+  - name: BuildEnvironment              # Choose the environment to deploy to: dev or prod
     type: string
     default: 'dev'
     values:
       - dev
       - prod
 
-  - name: tag                  # Docker image tag to use
+  - name: tag                           # Docker image tag to use
     type: string
     default: 'latest'
 
-# Define global variables used throughout the pipeline
+# Define global variables
 variables:
   imageName: 'deemaa/polybot-dev'
   imageNameprod: 'deemaa/polybot-prod'
-  DOCKERHUB_USERNAME: $(DOCKERHUB_USERNAME)
-  DOCKERHUB_TOKEN: $(DOCKERHUB_TOKEN)
+  DOCKERHUB_USERNAME: $(DOCKERHUB_USERNAME)  # Pulled from Azure DevOps secret variable
+  DOCKERHUB_TOKEN: $(DOCKERHUB_TOKEN)        # Pulled from Azure DevOps secret variable
 
-# ---------- Stage: Build & Deploy to Development ----------
 stages:
+
+  # Stage for building and deploying to the dev environment
   - stage: Build_Dev
     displayName: Build & Deploy to Dev
-    condition: eq('${{ parameters.BuildEnvironment }}', 'dev')  # Only run if 'dev' is selected
+    condition: eq('${{ parameters.BuildEnvironment }}', 'dev')  # Run only if 'dev' is selected
     jobs:
-      - job: DevDeploy
-        displayName: Deploy to Development
+      - job: BuildJobDev
         steps:
           - script: |
-              echo "Building Docker image..."
-              docker build -t $(imageName):${{ parameters.tag }} . 
+              echo "Deploying to Dev..."
+              echo "Image: $(imageName)"
+              echo "Tag: ${{ parameters.tag }}"
 
-              echo "Logging into Docker Hub..."
-              echo "$(DOCKERHUB_TOKEN)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin  
-
-              echo "Pushing image to Docker Hub..."
-              docker push $(imageName):${{ parameters.tag }}
-            displayName: "Build and Push Docker Image to Dev"
-
-# ---------- Stage: Build & Deploy to Production (with approval) ----------
+  # Stage for building and deploying to the prod environment (requires approval)
   - stage: Build_Prod
     displayName: Build & Deploy to Prod
-    condition: eq('${{ parameters.BuildEnvironment }}', 'prod')  # Only run if 'prod' is selected
-    dependsOn: Build_Dev  # Ensure Dev build completes before Prod
+    condition: eq('${{ parameters.BuildEnvironment }}', 'prod')  # Run only if 'prod' is selected
     jobs:
-      - deployment: ProdDeploy
-        displayName: Deploy to Production
-        environment: prod-approval  # Links this stage to Azure Environment requiring manual approval
+      - deployment: DeployToProd
+        environment: prod      # Azure environment named 'prod' with manual approval enabled
         strategy:
           runOnce:
             deploy:
               steps:
                 - script: |
-                    echo "🔧 Building Docker image..."
-                    docker build -t $(imageNameprod):${{ parameters.tag }} .  
-
-                    echo "🔐 Logging into Docker Hub..."
-                    echo "$(DOCKERHUB_TOKEN)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin 
-
-                    echo "📦 Pushing image to Docker Hub..."
-                    docker push $(imageNameprod):${{ parameters.tag }}
-                  displayName: "Build and Push Docker Image to Prod"
+                    echo "Deploying to Production..."
+                    echo "Image: $(imageNameprod)"
+                    echo "Tag: ${{ parameters.tag }}"

@@ -1,4 +1,4 @@
-# Topic 3 – Azure Pipelines 🚀
+# Topic 3 – Azure Pipelines 
 
 ## What You'll Learn
 
@@ -11,10 +11,10 @@
 
 ## Tasks
 
-- ✅ Convert the Jenkins pipeline to an Azure pipeline  
-- ✅ Add a stage that separates build into dev/prod  
-- ✅ Use runtime variables  
-- ✅ Test the pipeline through Pull Requests and add an approval condition
+- Convert the Jenkins pipeline to an Azure pipeline  
+- Add a stage that separates build into dev/prod  
+- Use runtime variables  
+- Test the pipeline through Pull Requests and add an approval condition
 
 ---
 
@@ -24,7 +24,7 @@
 |------|-------------|
 | `azure-pipelines.yml` | The main pipeline file defining all build and deploy logic |
 | `docs/azure-pipeline-doc.md` | Documentation explaining pipeline structure and execution |
-| `README.md` | This overview file |
+| `README.md` | 
 
 ---
 
@@ -61,7 +61,7 @@
 4. Monitor logs to ensure Docker image is built and pushed successfully.
 5. To test PR trigger:
    - Create a branch
-   - Push a change (e.g., update README)
+   - Push a change 
    - Open a Pull Request → Pipeline should trigger automatically.
 6. If `BuildEnvironment = prod`, the pipeline will:
    - Pause at the `Build_Prod` stage
