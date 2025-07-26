@@ -1,2 +1,2 @@
-*/15 * * * * /home/deema/PycharmProjects/KLA-Training-Program/Topic-11-Linux-Administration-and-Bash-Scripting/healthcheck.sh >> /home/deema/PycharmProjects/KLA-Training-Program/Topic-11-Linux-Administration-and-Bash-Scripting/logs/cron_healthcheck.log 2>&1
+#*/15 * * * * /home/deema/PycharmProjects/KLA-Training-Program/Topic-11-Linux-Administration-and-Bash-Scripting/healthcheck.sh >> /home/deema/PycharmProjects/KLA-Training-Program/Topic-11-Linux-Administration-and-Bash-Scripting/logs/cron_healthcheck.log 2>&1
 
