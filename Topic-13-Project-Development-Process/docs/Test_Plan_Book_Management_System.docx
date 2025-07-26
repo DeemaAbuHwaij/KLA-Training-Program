@@ -1,0 +1,38 @@
+Test Plan – Book Management System
+1. Introduction
+Purpose: Define the testing strategy for BMS
+2. Test Items
+- Add Book
+- Edit Book
+- Delete Book
+- View Books
+- Search Books
+3. Features to be Tested
+All core CRUD features
+4. Features Not to be Tested
+Authentication (not in scope)
+UI styling (visual QA is out of scope)
+5. Test Strategy
+Manual functional testing using defined test cases
+6. Test Cases
+Positive Tests
+TC1: Add a valid book
+Steps: Go to Add → Fill form → Submit
+Expected: Book is saved
+TC2: Search existing book by title
+Steps: Search for 'Harry Potter'
+Expected: Correct result shown
+Negative Tests
+TC3: Add book with missing title
+Steps: Leave title empty → Submit
+Expected: Error message shown
+TC4: Delete book that doesn't exist
+Steps: Try to delete non-existent ID
+Expected: Error or no-op
+Boundary Tests
+TC5: Add book with max-length title
+Steps: Use 255-character title
+Expected: Book is saved
+TC6: Add book with invalid year
+Steps: Year = 'abcd'
+Expected: Validation error
