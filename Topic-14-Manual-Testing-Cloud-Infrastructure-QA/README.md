@@ -32,7 +32,3 @@
 - Test cloud APIs for both functionality and security
 
 ---
-
-## Notes
-- You can convert `test_cases.md` to Excel if needed.
-- For actual implementation, integrate Postman or write Python test scripts using `requests`.
