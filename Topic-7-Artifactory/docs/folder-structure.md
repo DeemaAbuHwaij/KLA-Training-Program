@@ -18,3 +18,7 @@ libs-release-local/
 - Easy to track and manage releases
 - Compatible with cleanup policies
 - Supports versioned deployments
+
+> 📌 This folder structure is automatically created in Artifactory by the upload script (`upload.sh`), which declares the path:
+>
+> `libs-release-local/myapp/1.0.0/myapp-v1.0.0.zip`
