@@ -1,4 +1,3 @@
-
 aws_region     = "us-west-1"
 windows_ami    = "ami-0d94c1edb53740e3c"
 instance_type  = "t3.medium"
