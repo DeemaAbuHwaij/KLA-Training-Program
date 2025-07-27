@@ -1,5 +1,0 @@
-config:
-  azure-native:location: eastus
-  topic-6-pulumi-with-python-azure:admin_username: deemaazure
-  topic-6-pulumi-with-python-azure:admin_password:
-    secure: AAABANxcLYAMZhtfHXHCVnu3YLx5YcmzQbc5daQeC/TFHIblpFFCgtHT
