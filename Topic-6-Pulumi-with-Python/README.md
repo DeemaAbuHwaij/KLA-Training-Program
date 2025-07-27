@@ -1,63 +1,93 @@
 # Topic 6: Pulumi – Infrastructure as Code with Python
 
 ## What You’ll Learn
-- Defining AWS infrastructure using Pulumi and Python
-- Automating EC2 instance provisioning
-- Using Pulumi config and stack environments
-- Managing infrastructure lifecycle with Pulumi CLI
+- How to define infrastructure as code using Pulumi in Python
+- Creating and managing cloud resources programmatically
+- Understanding the benefits of using a general-purpose language for IaC
 
-## What Was Built
+## Tasks:
+- Write Pulumi code (__main__.py) that deploys a cloud server
+- Configure the project and deploy using the Pulumi CLI
+- Document the setup and environment
+- Add cleanup logic to the script
 
-This project uses **Pulumi with Python** to deploy a virtual Windows server on **Microsoft Azure**. The infrastructure includes:
 
-- A **Resource Group** to organize all resources.
-- A **Virtual Network** and **Subnet** to manage internal networking.
-- A **Public IP Address** to expose the VM externally.
-- A **Network Interface Card (NIC)** connected to the subnet and public IP.
-- A **Windows Virtual Machine** (Windows Server 2019 Datacenter) with the `Standard_B2ms` size.
+## 📌 What Was Built
 
-The admin credentials are managed securely using Pulumi configuration secrets.
+This project provisions a basic EC2 server on AWS using Pulumi and Python:
 
-## Why This Setup
+- A **Security Group** allowing inbound SSH (port 22) traffic
+- A **t2.micro EC2 instance** running Amazon Linux 2
+- Public IP and DNS exported using `pulumi.export(...)`
 
-This setup simulates a basic real-world deployment of a virtual server on Azure for testing, learning, or hosting simple workloads. It demonstrates:
+---
 
-- Using **Python** for IaC (Infrastructure as Code)
-- Managing cloud infrastructure declaratively
-- Storing secrets securely
-- Deploying repeatable environments with minimal manual steps
+## Why Use This
 
-## Outputs
+- Demonstrates **Infrastructure as Code (IaC)** using Python
+- Uses Pulumi to programmatically provision cloud resources
+- Provides a reusable template for cloud server deployment
 
--**Public IP:** `172.176.178.79`
+---
 
-## Deployment Steps
+## Setup & Deployment
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 1. Create a virtual environment and install dependencies
 
-2. Set Pulumi config values:
-   ```bash
-   pulumi config set azure-native:location westeurope
-   pulumi config set admin_username azureuser
-   pulumi config set --secret admin_password P@ssword123!
-   ```
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
-3. Deploy the stack:
-   ```bash
-   pulumi up
-   ```
+### 2. Initialize Pulumi stack
+
+```bash
+pulumi stack init dev
+pulumi config set aws:region us-west-1
+```
+
+### 3. Deploy
+
+```bash
+pulumi up
+```
+
+---
+
+## Access the Server
+
+Use the exported public IP or DNS to SSH into the instance (requires key pair):
+
+```bash
+ssh ec2-user@<publicIp>
+```
+
+---
 
 ## Cleanup
 
-To destroy the environment:
+To destroy everything and delete the stack:
+
 ```bash
-pulumi destroy
+python cleanup.py
 ```
 
-Then, optionally remove the stack:
-```bash
-pulumi stack rm dev
-```
+---
+
+## Files
+
+| File                            | Description           |
+|---------------------------------|-----------------------|
+| `__main__.py`                   | Pulumi code           |
+| `Pulumi.yaml`                   | Project settings      |
+| `Pulumi.dev.yaml`               | Stack config          |
+| `requirements.txt`              | Python dependencies   |
+| `cleanup.py`                    | Stack teardown script |
+| `README.md`                     | Documentation         |
+| `pulumi-browser-screenshot.png` | Deployment screenshot |
+| `outputs-screenshot.png`        | Outputs screenshot    |
+
+
+---
+

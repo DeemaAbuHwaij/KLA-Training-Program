@@ -1,3 +1,3 @@
-name: topic-6-pulumi-with-python-azure
+name: aws-webserver
 runtime: python
-description: A simple Pulumi project to deploy a Windows server on Azure
+description: AWS EC2 web‑server deployed via Pulumi + Python
