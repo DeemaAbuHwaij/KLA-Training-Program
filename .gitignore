@@ -2,3 +2,5 @@
 .venv/
 venv/
 .env
+Topic-5-Terraform-Azure/terraform.tfvars
+Topic-6-Pulumi-Azure/Pulumi.dev.yaml
