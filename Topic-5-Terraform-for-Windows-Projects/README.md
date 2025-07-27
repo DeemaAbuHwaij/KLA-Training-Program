@@ -79,7 +79,6 @@ Topic-5-Terraform-for-Windows-Projects/
 ## Deliverables
 
 - Terraform project files
-- Screenshot of `terraform apply` output
 - Screenshot of the Windows VM in AWS Console (`windows-vm-screenshot.png`)
 - Public IP saved in `terraform-outputs.json`
 
