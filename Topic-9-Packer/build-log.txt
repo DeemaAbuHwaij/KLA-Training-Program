@@ -1,0 +1,17 @@
+[1;32mamazon-ebs: output will be in this color.[0m
+
+[1;32m==> amazon-ebs: Prevalidating any provided VPC information[0m
+[1;32m==> amazon-ebs: Prevalidating AMI Name: windows-python-1753687392[0m
+[1;32m==> amazon-ebs: Found Image ID: ami-0a28e22717e99af98[0m
+[1;32m==> amazon-ebs: Creating temporary keypair: packer_68872561-3c15-f523-6f8d-34c98f4b5208[0m
+[1;32m==> amazon-ebs: Launching a source AWS instance...[0m
+[1;32m==> amazon-ebs: changing public IP address config to true for instance on subnet "subnet-0f53a9f1da4485b8b"[0m
+[1;32m==> amazon-ebs: Instance ID: i-0fc3bf3a6de8c8363[0m
+[1;32m==> amazon-ebs: Waiting for instance (i-0fc3bf3a6de8c8363) to become ready...[0m
+[1;32m==> amazon-ebs: Waiting for auto-generated password for instance...[0m
+[1;32m==> amazon-ebs: It is normal for this process to take up to 15 minutes,
+==> amazon-ebs: but it usually takes around 5. Please wait.[0m
+[1;32m==> amazon-ebs:  
+==> amazon-ebs: Password retrieved![0m
+[1;32m==> amazon-ebs: Using WinRM communicator to connect: 54.193.127.146[0m
+[1;32m==> amazon-ebs: Waiting for WinRM to become available...[0m

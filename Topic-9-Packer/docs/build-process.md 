@@ -2,19 +2,19 @@
 
 ## What Was Built
 
-A reusable Windows Server 2019 image with Python 3.11.5 pre-installed using Packer and PowerShell provisioning.
-This image can be used to launch new Azure VMs with Python already installed and configured in the system PATH.
+A reusable **Windows Server 2019 AMI** with **Python 3.10.0** pre-installed using **Packer** and **PowerShell provisioning**.
+This image can be used to launch new **EC2 instances** with Python already installed and configured in the system PATH.
 
 ---
 
 ## Configuration
 
-- **Builder**: `azure-arm`
-- **Region**: `West Europe`
-- **VM Size**: `Standard_B1s`
+- **Builder**: `amazon-ebs`
+- **Region**: `us-west-1` (or your chosen AWS region)
+- **Instance Type**: `t2.micro`
 - **Provisioner**: PowerShell script
-- **Base Image**: Microsoft-provided `WindowsServer:2019-Datacenter`
-- **Python Version Installed**: `3.11.5`
+- **Base Image (AMI)**: Public Windows Server 2019 base AMI
+- **Python Version Installed**: `3.10.0`
 
 ---
 
@@ -22,34 +22,35 @@ This image can be used to launch new Azure VMs with Python already installed and
 
 The provisioning script:
 
-- Downloads the Python 3.11.5 installer
-- Runs it silently with `/quiet` and adds it to system PATH
-- Verifies the installation using fallback logic:
+- Downloads the Python 3.10.0 installer from python.org
+- Installs it silently using `/quiet`
+- Adds it to the system PATH
+- Verifies the installation using:
   - `python --version`
-  - Or directly via `C:\Program Files\Python311\python.exe`
 
 ---
 
 ## Output Image
 
-- **Image Name**: `windows-python-1753445048`
-- **Image Location**: `West Europe`
-- **Resource Group**: `packer-rg`
-- **Managed Image ID**:
-  /subscriptions/224b3184-d1b2-48ab-a0e0-f6cd58ba8c11/resourceGroups/packer-rg/providers/Microsoft.Compute/images/windows-python-1753445048
+- **AMI Name**: `windows-python-<timestamp>`
+- **AMI Region**: As configured (e.g., `us-west-1`)
+- **AMI ID**: Displayed in the Packer CLI output
+
+You can find the image in the **AWS EC2 Console → AMIs** section.
 
 ---
 
 ## Cleanup & Automation
 
-- Temporary resource group, VM, public IP, VNet, NIC, and Key Vault were created automatically.
-- After generalizing and capturing the image, **all resources were cleaned up** by Packer.
+- Packer automatically launched a temporary EC2 instance, installed Python, created an AMI snapshot, and then terminated the instance.
+- No manual cleanup is required.
 
 ---
 
 ## Verified Output
 
-Packer confirmed the presence of Python with this output:
+Example Packer confirmation output:
 ```
-==> azure-arm: Python 3.11.5
+==> amazon-ebs: AMI: ami-0d94c1edb53740e3c
+==> amazon-ebs: Successfully installed Python 3.10.0
 ```

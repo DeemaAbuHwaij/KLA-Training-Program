@@ -1,40 +1,37 @@
 {
   "variables": {
-    "client_id": "",
-    "client_secret": "",
-    "tenant_id": "",
-    "subscription_id": "",
-    "resource_group": "packer-rg",
-    "location": "West Europe",
-    "image_name": "windows-python-{{timestamp}}"
+    "region": "us-west-1",
+    "source_ami": "ami-0a28e22717e99af98",
+    "instance_type": "t3.medium",
+    "ami_name": "windows-python-{{timestamp}}"
   },
   "builders": [
     {
-      "type": "azure-arm",
-      "client_id": "{{user `client_id`}}",
-      "client_secret": "{{user `client_secret`}}",
-      "tenant_id": "{{user `tenant_id`}}",
-      "subscription_id": "{{user `subscription_id`}}",
-      "managed_image_resource_group_name": "{{user `resource_group`}}",
-      "managed_image_name": "{{user `image_name`}}",
-      "os_type": "Windows",
-      "image_publisher": "MicrosoftWindowsServer",
-      "image_offer": "WindowsServer",
-      "image_sku": "2019-Datacenter",
-      "location": "{{user `location`}}",
-      "vm_size": "Standard_B1s",
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ami_name": "{{user `ami_name`}}",
       "communicator": "winrm",
-      "winrm_use_ssl": true,
+      "winrm_username": "Administrator",
+      "winrm_timeout": "30m",
       "winrm_insecure": true,
-      "winrm_timeout": "1h",
-      "winrm_username": "packer"
+      "winrm_use_ssl": false,
+      "pause_before_connecting": "3m",
+      "associate_public_ip_address": true,
+      "security_group_id": "sg-0642452a842a96aa9",
+      "subnet_id": "subnet-0f53a9f1da4485b8b",
+      "user_data_file": "scripts/enable-winrm.ps1",
+      "run_tags": {
+        "Name": "Packer-Builder"
+      }
     }
   ],
   "provisioners": [
     {
       "type": "powershell",
       "scripts": [
-        "scripts/install_python.ps1"
+        "scripts/python-install.ps1"
       ]
     }
   ]
