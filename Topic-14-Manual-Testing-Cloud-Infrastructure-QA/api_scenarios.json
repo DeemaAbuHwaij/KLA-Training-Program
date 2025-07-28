@@ -24,6 +24,22 @@
       "comment": "Should return VPC details"
     },
     {
+      "name": "Update VPC - Change Name (Valid)",
+      "method": "PUT",
+      "url": "/api/v1/vpcs/vpc-12345",
+      "payload": { "name": "vpc-updated" },
+      "expected_status": 200,
+      "comment": "Should update VPC name successfully"
+    },
+    {
+      "name": "Update VPC - Invalid CIDR",
+      "method": "PUT",
+      "url": "/api/v1/vpcs/vpc-12345",
+      "payload": { "cidr": "300.300.300.0/16" },
+      "expected_status": 400,
+      "comment": "Should reject invalid CIDR on update"
+    },
+    {
       "name": "Delete VPC without permission",
       "method": "DELETE",
       "url": "/api/v1/vpcs/vpc-12345",
