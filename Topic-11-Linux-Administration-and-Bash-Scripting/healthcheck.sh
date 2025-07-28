@@ -4,7 +4,7 @@
 # Define log directories
 SERVICES=("apache2" "docker" "cron" "cups" "rsyslog")
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-LOG_DIR="$SCRIPT_DIR/logs"
+LOG_DIR="/var/log/custom"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/healthcheck_$(date +%F_%T).log"
 DEBUG_LOG="$LOG_DIR/cron_healthcheck.log"
