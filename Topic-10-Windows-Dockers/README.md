@@ -54,7 +54,6 @@ Topic-10-Windows-Dockers/
 ├── index.html                # Custom landing page for IIS
 ├── build_output.txt          # Output from docker build
 ├── run_output.txt            # Output from docker run
-├── docker_push_output.txt    # Output from docker push
 ├── browser_screenshot.png    # Screenshot of the service in browser
 └── README.md                 # This file
 ```

@@ -1,0 +1,1 @@
+The push refers to repository [docker.io/deemaa/myimage]
