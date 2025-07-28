@@ -52,10 +52,11 @@ docker push deemaa/windows-iis-demo
 Topic-10-Windows-Dockers/
 ├── Dockerfile                 # Builds the Windows IIS container
 ├── index.html                # Custom landing page for IIS
-├── build_output.txt          # Output from docker build
-├── run_output.txt            # Output from docker run
-├── browser_screenshot.png    # Screenshot of the service in browser
-└── README.md                 # This file
+├── build_output.txt          
+├── run_output.txt            
+├── browser_screenshot.png   
+├── docker_push_output.png    
+└── README.md                 
 ```
 
 ---
