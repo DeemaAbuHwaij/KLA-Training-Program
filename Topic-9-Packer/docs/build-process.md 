@@ -49,8 +49,8 @@ You can find the image in the **AWS EC2 Console → AMIs** section.
 
 ## Verified Output
 
-Example Packer confirmation output:
+Packer confirmation output:
 ```
-==> amazon-ebs: AMI: ami-0d94c1edb53740e3c
+==> amazon-ebs: AMI: ami-0a28e22717e99af98
 ==> amazon-ebs: Successfully installed Python 3.10.0
 ```

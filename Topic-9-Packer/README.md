@@ -21,11 +21,14 @@ Topic-9-Packer/
 ├── packer.json                 # Main Packer template (AWS)
 ├── packer-config.pkr.hcl       # Plugin configuration for amazon-ebs
 ├── output/
-│   └── packer-output.log       # CLI output from successful build
+│   └── ec2-summary.png     
+│   └── image-summary.png   
+│   └── packer-log.png     
 ├── docs/
 │   └── build-process.md      
 ├── scripts/
 │   └── install_python.ps1
+│   └── enable-winrm.ps1
 └── README.md                   
 ```
 
